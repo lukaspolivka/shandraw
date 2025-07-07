@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import config from '@/config';
 import { cn } from '@/lib/utils';
 import { Inter, Source_Code_Pro } from 'next/font/google';
+import { ThemeProvider } from '@/components/provider/ThemeProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,10 +29,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn('antialiased', inter.variable, sourceCodePro.variable)}>
-        {children}
-        <Toaster />
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="theme-color" content="#112A46" />
+      </head>
+      <body className={cn('font-body antialiased', inter.variable, sourceCodePro.variable)}>
+        <ThemeProvider disableTransitionOnChange>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

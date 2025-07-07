@@ -1,5 +1,6 @@
 const config = {
   app_name: 'Shandraw',
+  developer: 'Mohammad Farhad',
   token_name: (process.env.TOKEN_NAME || process.env.NEXT_PUBLIC_TOKEN_NAME) as string,
   base_url: process.env.BASE_URL || (process.env.NEXT_PUBLIC_BASE_URL as string),
   bcrypt_salt: Number(process.env.BCRYPT_SALT),

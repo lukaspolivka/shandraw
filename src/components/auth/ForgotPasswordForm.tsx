@@ -39,7 +39,6 @@ export function ForgotPasswordForm() {
 
     try {
       const result = await forgotPassword(values);
-      console.log(result);
       if (result.success) {
         toast({
           variant: 'default',

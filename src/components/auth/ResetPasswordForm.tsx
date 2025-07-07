@@ -46,7 +46,6 @@ export function ResetPasswordForm({ token }: { token: string }) {
     };
     try {
       const result = await resetPassword(payload);
-      console.log(result);
       if (result.success) {
         toast({
           variant: 'default',

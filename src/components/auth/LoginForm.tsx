@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppStore } from '@/store/useAppStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/useToast';
 
 const formSchema = z.object({
@@ -25,8 +25,8 @@ export function LoginForm() {
   const { login } = useAppStore();
   const router = useRouter();
   const { toast } = useToast();
-
-  const redirectURL = '/';
+  const searchParams = useSearchParams();
+  const redirectURL = searchParams.get('redirectForm') || '/dashboard';
 
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(formSchema),
@@ -38,7 +38,6 @@ export function LoginForm() {
 
     try {
       const result = await login(values);
-      console.log(result);
       if (result.success) {
         toast({
           variant: 'default',
