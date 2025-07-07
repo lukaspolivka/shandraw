@@ -14,11 +14,11 @@ export async function matchedPassword(password: string, hash: string): Promise<b
   try {
     const valid = await argon2.verify(hash, password);
     if (!valid) {
-      throw new ApiError(401, 'Invalid credentials');
+      throw new ApiError(401, 'Wrong password provide.');
     }
     return true;
-  } catch (error) {
-    throw new ApiError(500, 'Error verifying password');
+  } catch (error: any) {
+    throw new ApiError(error.statusCode || 500, error.message);
   }
 }
 

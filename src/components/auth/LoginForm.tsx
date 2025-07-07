@@ -9,6 +9,9 @@ import { SDInput } from '../shared/form/SDInput';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAppStore } from '@/store/useAppStore';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 
 const formSchema = z.object({
   username: z.string().min(1, { message: 'Username is required.' }),
@@ -19,6 +22,11 @@ type LoginSchemaType = z.infer<typeof formSchema>;
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAppStore();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const redirectURL = '/';
 
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(formSchema),
@@ -27,7 +35,32 @@ export function LoginForm() {
 
   const onSubmit = async (values: LoginSchemaType) => {
     setIsLoading(true);
-    console.log(values);
+
+    try {
+      const result = await login(values);
+      console.log(result);
+      if (result.success) {
+        toast({
+          variant: 'default',
+          title: 'Login Success.',
+          description: 'You successfully login to your account.',
+        });
+        methods.reset();
+        router.push(redirectURL);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Login Failed.',
+          description: result.message,
+        });
+      }
+    } catch (err) {
+      toast({
+        variant: 'destructive',
+        description: 'Please try again later.',
+        title: 'Unexpected error',
+      });
+    }
     setIsLoading(false);
   };
 

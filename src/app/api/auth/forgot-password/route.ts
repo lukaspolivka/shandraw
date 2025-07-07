@@ -31,6 +31,6 @@ export const POST = catchAsync(async (req) => {
 
   return sendResponse({
     statusCode: 200,
-    message: 'If a user with that email exists, a password reset link has been sent.',
+    message: 'A password reset link has been sent in this email.',
   });
 });

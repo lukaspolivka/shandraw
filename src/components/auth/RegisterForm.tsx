@@ -8,12 +8,15 @@ import { Button } from '@/components/ui/button';
 import { UserPlus } from 'lucide-react';
 import { SDForm } from '../shared/form/SDForm';
 import { SDInput } from '../shared/form/SDInput';
+import { useAppStore } from '@/store/useAppStore';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  name: z.string().min(2, { message: 'Name must be provide.' }),
   username: z
     .string()
-    .min(3, 'Username must be at least 3 characters.')
+    .min(3, 'Username must be provide.')
     .regex(/^[a-z0-9_]+$/, 'Only lowercase letters, numbers, and underscores are allowed.'),
   email: z.string().email({ message: 'Please enter a valid email.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
@@ -23,6 +26,9 @@ type RegisterSchemaType = z.infer<typeof formSchema>;
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const { register } = useAppStore();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const methods = useForm<RegisterSchemaType>({
     resolver: zodResolver(formSchema),
@@ -31,7 +37,31 @@ export function RegisterForm() {
 
   const onSubmit = async (values: RegisterSchemaType) => {
     setIsLoading(true);
-    console.log(values);
+
+    try {
+      const result = await register(values);
+      if (result.success) {
+        toast({
+          variant: 'default',
+          title: 'Success',
+          description: result.message,
+        });
+        methods.reset();
+        router.push('/login');
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Warning',
+          description: result.message,
+        });
+      }
+    } catch (err) {
+      toast({
+        variant: 'destructive',
+        description: 'Please try again later.',
+        title: 'Unexpected error',
+      });
+    }
     setIsLoading(false);
   };
 

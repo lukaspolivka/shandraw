@@ -12,6 +12,8 @@ import Image from 'next/image';
 import config from '@/config';
 import { SDForm } from '../shared/form/SDForm';
 import { SDInput } from '../shared/form/SDInput';
+import { useAppStore } from '@/store/useAppStore';
+import { useToast } from '@/hooks/useToast';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -22,8 +24,10 @@ type ForgetPasswordSchemaType = z.infer<typeof formSchema>;
 export function ForgotPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { forgotPassword } = useAppStore();
+  const { toast } = useToast();
 
-  const method = useForm<ForgetPasswordSchemaType>({
+  const methods = useForm<ForgetPasswordSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
@@ -32,8 +36,32 @@ export function ForgotPasswordForm() {
 
   const onSubmit = async (values: ForgetPasswordSchemaType) => {
     setIsLoading(true);
-    console.log(values);
-    setIsSubmitted(true);
+
+    try {
+      const result = await forgotPassword(values);
+      console.log(result);
+      if (result.success) {
+        toast({
+          variant: 'default',
+          title: 'Forget Request Success.',
+          description: result.message,
+        });
+        methods.reset();
+        setIsSubmitted(true);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Forget Request Failed.',
+          description: result.message,
+        });
+      }
+    } catch (err) {
+      toast({
+        variant: 'destructive',
+        description: 'Please try again later.',
+        title: 'Unexpected error',
+      });
+    }
     setIsLoading(false);
   };
 
@@ -55,7 +83,7 @@ export function ForgotPasswordForm() {
         <CardDescription>Enter your email and we&apos;ll send you a reset link</CardDescription>
       </CardHeader>
       <CardContent>
-        <SDForm methods={method} onSubmit={onSubmit} className="space-y-5">
+        <SDForm methods={methods} onSubmit={onSubmit} className="space-y-5">
           <SDInput
             name="email"
             label="Email"

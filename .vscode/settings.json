@@ -5,4 +5,5 @@
         "**/node_modules": true,
     },
     "prettier.requireConfig": true,
+    "css.lint.unknownAtRules": "ignore",
 }

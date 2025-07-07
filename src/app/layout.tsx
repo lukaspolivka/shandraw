@@ -1,20 +1,25 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
+import config from '@/config';
+import { cn } from '@/lib/utils';
+import { Inter, Source_Code_Pro } from 'next/font/google';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const sourceCodePro = Source_Code_Pro({
   subsets: ['latin'],
+  variable: '--font-source-code-pro',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Shandraw',
-  description: 'Database diagram builder — fast, offline, beautiful.',
+  title: config.app_name,
+  description: 'Code-driven database diagramming tool',
 };
 
 export default function RootLayout({
@@ -24,10 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased font-sans`}
-      >
+      <body className={cn('antialiased', inter.variable, sourceCodePro.variable)}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button';
 import { KeyRound } from 'lucide-react';
 import { SDForm } from '../shared/form/SDForm';
 import { SDInput } from '../shared/form/SDInput';
+import { useToast } from '@/hooks/useToast';
+import { useRouter } from 'next/navigation';
+import { useAppStore } from '@/store/useAppStore';
 
 const formSchema = z
   .object({
@@ -23,6 +26,9 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function ResetPasswordForm({ token }: { token: string }) {
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+  const { resetPassword } = useAppStore();
 
   const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -33,9 +39,36 @@ export function ResetPasswordForm({ token }: { token: string }) {
   });
 
   const onSubmit = async (values: FormValues) => {
-    if (!token) return;
     setIsLoading(true);
-    console.log(values);
+    const payload = {
+      password: values.password,
+      token,
+    };
+    try {
+      const result = await resetPassword(payload);
+      console.log(result);
+      if (result.success) {
+        toast({
+          variant: 'default',
+          title: 'Forget Request Success.',
+          description: result.message,
+        });
+        methods.reset();
+        router.push('/login');
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Forget Request Failed.',
+          description: result.message,
+        });
+      }
+    } catch (err) {
+      toast({
+        variant: 'destructive',
+        description: 'Please try again later.',
+        title: 'Unexpected error',
+      });
+    }
     setIsLoading(false);
   };
 

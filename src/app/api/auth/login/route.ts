@@ -15,13 +15,10 @@ export const POST = catchAsync(async (req) => {
     where: { username },
   });
   if (!user) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'Invalid username.');
   }
 
-  const isPasswordValid = await matchedPassword(password, user.password);
-  if (!isPasswordValid) {
-    throw new ApiError(401, 'Invalid credentials');
-  }
+  await matchedPassword(password, user.password);
 
   const token = await generateToken(
     { userId: user.id, email: user.email },
