@@ -4,7 +4,7 @@ import ApiError from '@/lib/utils/server/ApiError';
 import { decodeToken, hashedPassword } from '@/lib/utils/server/authHelper';
 import catchAsync from '@/lib/utils/server/catchAsync';
 import reqValidator from '@/lib/utils/server/reqValidator';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import { resetPasswordSchema } from '@/schemas/auth.schema';
 import { JWTPayload } from 'jose';
 
@@ -27,7 +27,7 @@ export const POST = catchAsync(async (req) => {
     where: { id: payload.userId },
     data: { password: newHashedPassword },
   });
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'Password has been reset successfully',
   });

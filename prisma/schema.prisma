@@ -32,7 +32,7 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   isPublic    Boolean  @default(false)
-  shareId     String?  @unique
+  shareId     String?
 
   User User @relation(fields: [userId], references: [id])
 

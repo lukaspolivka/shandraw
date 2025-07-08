@@ -4,7 +4,7 @@ import ApiError from '@/lib/utils/server/ApiError';
 import { generateToken, matchedPassword } from '@/lib/utils/server/authHelper';
 import catchAsync from '@/lib/utils/server/catchAsync';
 import reqValidator from '@/lib/utils/server/reqValidator';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import { loginSchema } from '@/schemas/auth.schema';
 
 export const POST = catchAsync(async (req) => {
@@ -26,7 +26,7 @@ export const POST = catchAsync(async (req) => {
     config.jwt.expires
   );
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'Login successful',
     data: { token },

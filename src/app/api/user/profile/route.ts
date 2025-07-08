@@ -2,7 +2,7 @@ import catchAsync from '@/lib/utils/server/catchAsync';
 import prisma from '@/lib/prisma';
 import apiAuthValidator from '@/lib/utils/server/apiAuthValidator';
 import ApiError from '@/lib/utils/server/ApiError';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import reqValidator from '@/lib/utils/server/reqValidator';
 import { updateProfileSchema } from '@/schemas/auth.schema';
 
@@ -23,7 +23,7 @@ export const GET = catchAsync(async (request) => {
     throw new ApiError(404, 'User not found');
   }
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'User profile fetched successfully',
     data: user,
@@ -55,7 +55,7 @@ export const POST = catchAsync(async (req) => {
     },
   });
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'Profile updated successfully',
     data: updatedUser,

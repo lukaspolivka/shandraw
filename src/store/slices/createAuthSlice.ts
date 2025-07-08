@@ -1,6 +1,5 @@
 import config from '@/config';
-import { AppStore } from '../useAppStore';
-import { StoreSlice } from '../types';
+import { StoreSlice } from '../useAppStore';
 
 interface LoginValues {
   username: string;

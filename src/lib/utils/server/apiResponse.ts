@@ -6,7 +6,7 @@ interface ResponsePayload<T> {
   data?: T;
 }
 
-const sendResponse = <T>({ statusCode, message, data }: ResponsePayload<T>) => {
+const apiResponse = <T>({ statusCode, message, data }: ResponsePayload<T>) => {
   return NextResponse.json(
     {
       success: statusCode < 400,
@@ -17,4 +17,4 @@ const sendResponse = <T>({ statusCode, message, data }: ResponsePayload<T>) => {
   );
 };
 
-export default sendResponse;
+export default apiResponse;

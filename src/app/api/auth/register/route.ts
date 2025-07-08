@@ -1,7 +1,7 @@
 import ApiError from '@/lib/utils/server/ApiError';
 import catchAsync from '@/lib/utils/server/catchAsync';
 import reqValidator from '@/lib/utils/server/reqValidator';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import { hashedPassword } from '@/lib/utils/server/authHelper';
 import { registerSchema } from '@/schemas/auth.schema';
 import prisma from '@/lib/prisma';
@@ -36,7 +36,7 @@ export const POST = catchAsync(async (req) => {
 
   const { password: _, ...userWithoutPassword } = user;
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 201,
     message: 'User registered successfully',
     data: userWithoutPassword,

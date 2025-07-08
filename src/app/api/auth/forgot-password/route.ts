@@ -5,7 +5,7 @@ import { generateToken } from '@/lib/utils/server/authHelper';
 import catchAsync from '@/lib/utils/server/catchAsync';
 import reqValidator from '@/lib/utils/server/reqValidator';
 import sendPasswordResetEmail from '@/lib/utils/server/sendPasswordResetEmail';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import { forgotPasswordSchema } from '@/schemas/auth.schema';
 
 export const POST = catchAsync(async (req) => {
@@ -29,7 +29,7 @@ export const POST = catchAsync(async (req) => {
 
   await sendPasswordResetEmail(email, resetToken);
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'A password reset link has been sent in this email.',
   });

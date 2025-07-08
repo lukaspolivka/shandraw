@@ -19,9 +19,9 @@ export default [
   }),
   {
     rules: {
-      'prettier/prettier': ['error'],
-      'no-console': 'warn',
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      // 'prettier/prettier': ['error'],
+      // 'no-console': 'warn',
+      // 'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
 ];

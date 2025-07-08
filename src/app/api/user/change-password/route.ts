@@ -4,7 +4,7 @@ import ApiError from '@/lib/utils/server/ApiError';
 import { hashedPassword, matchedPassword } from '@/lib/utils/server/authHelper';
 import catchAsync from '@/lib/utils/server/catchAsync';
 import reqValidator from '@/lib/utils/server/reqValidator';
-import sendResponse from '@/lib/utils/server/sendResponse';
+import apiResponse from '@/lib/utils/server/apiResponse';
 import { changePasswordSchema } from '@/schemas/auth.schema';
 
 export const POST = catchAsync(async (req) => {
@@ -27,7 +27,7 @@ export const POST = catchAsync(async (req) => {
     data: { password: newHashedPassword },
   });
 
-  return sendResponse({
+  return apiResponse({
     statusCode: 200,
     message: 'Password updated successfully',
   });

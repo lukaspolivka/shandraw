@@ -1,9 +1,11 @@
 {
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
-    "files.exclude": {
-        "**/node_modules": true,
-    },
     "prettier.requireConfig": true,
     "css.lint.unknownAtRules": "ignore",
+    "cSpell.words": [
+        "elkjs",
+        "layouted",
+        "reactflow"
+    ],
 }
