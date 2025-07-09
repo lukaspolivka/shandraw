@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User as UserIcon, Loader2 } from 'lucide-react';
+import { LogOut, User as UserIcon, Loader2, Home } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import getInitials from '@/lib/utils/getInitials';
 
@@ -24,7 +24,6 @@ export function UserNav() {
 
   const handleLogout = () => {
     logout();
-    router.replace('/login');
   };
 
   useEffect(() => {
@@ -60,6 +59,10 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem onSelect={() => router.push('/dashboard')}>
+            <Home className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => router.push('/dashboard/profile')}>
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>

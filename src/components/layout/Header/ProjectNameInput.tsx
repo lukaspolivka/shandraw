@@ -2,19 +2,18 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAppStore } from '@/store/useAppStore';
 import { Home } from 'lucide-react';
+import Link from 'next/link';
 
-interface Props {
-  projectName: string;
-  setProjectName: (name: string) => void;
-  onHomeClick: () => void;
-}
-
-export default function ProjectNameInput({ projectName, setProjectName, onHomeClick }: Props) {
+const ProjectNameInput = () => {
+  const { projectName, setProjectName } = useAppStore();
   return (
     <div className="flex items-center gap-1 sm:gap-2">
-      <Button variant="ghost" size="icon" onClick={onHomeClick} className="shrink-0">
-        <Home className="h-5 w-5" />
+      <Button variant="ghost" size="icon" className="shrink-0" asChild>
+        <Link href="/dashboard">
+          <Home className="h-5 w-5" />
+        </Link>
       </Button>
       <Input
         value={projectName}
@@ -24,4 +23,6 @@ export default function ProjectNameInput({ projectName, setProjectName, onHomeCl
       />
     </div>
   );
-}
+};
+
+export default ProjectNameInput;

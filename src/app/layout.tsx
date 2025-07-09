@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/provider/ThemeProvider';
-import { Inter, Source_Code_Pro,  } from 'next/font/google';
+import { Inter, Source_Code_Pro } from 'next/font/google';
 import { siteMetadata } from '@/config/metadata';
 
 const inter = Inter({
@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-}
+};
 
 export default function RootLayout({
   children,

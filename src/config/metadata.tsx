@@ -20,10 +20,7 @@ const keywords = [
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(siteURL),
-  title: {
-    default: title,
-    template: '%s | Shandraw',
-  },
+  title: title,
   description,
   keywords,
   applicationName: 'Shandraw',

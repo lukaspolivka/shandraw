@@ -8,9 +8,9 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between">
           <p>
-            &copy; {year} {config.app_name}. All Rights Reserved.
+            &copy; {year} {config.app_name}. <span>All Rights Reserved.</span>
           </p>
-          <p className="font-medium">
+          <p className="font-medium hidden sm:inline-flex gap-1">
             Developed by{' '}
             <span className="font-semibold text-primary transition-colors hover:text-primary/80">
               {config.developer}

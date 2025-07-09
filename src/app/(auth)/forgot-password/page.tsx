@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
+import config from '@/config';
+
+export const metadata = {
+  title: `Forgot Password - ${config.app_name}`,
+  description: `Recover access to your ${config.app_name} account by resetting your password securely.`,
+};
 
 export default function ForgotPasswordPage() {
   return (

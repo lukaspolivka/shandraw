@@ -1,5 +1,12 @@
 import { ProjectList } from '@/components/dashboard/ProjectList';
+import config from '@/config';
+import { Metadata } from 'next';
 import React from 'react';
+
+export const metadata: Metadata = {
+  title: `Dashboard - ${config.app_name}`,
+  description: `${config.app_name} dashboard to manage and visualize your database schemas.`,
+};
 
 const DashboardPage = () => {
   return (

@@ -4,6 +4,11 @@ import config from '@/config';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const metadata = {
+  title: `Login - ${config.app_name}`,
+  description: `Access your ${config.app_name} account to manage and design database schemas efficiently.`,
+};
+
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">

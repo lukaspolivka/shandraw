@@ -7,6 +7,11 @@ import config from '@/config';
 import { AlertTriangle } from 'lucide-react';
 import LoadingUI from '@/components/shared/LoadingUI';
 
+export const metadata = {
+  title: `Reset Password - ${config.app_name}`,
+  description: `Set a new password for your ${config.app_name} account and regain full access.`,
+};
+
 const NoTokenAlert = () => {
   return (
     <Card>

@@ -24,7 +24,7 @@ export default function SaveButton({ isLoading, onClick, className, children }: 
       ) : (
         <Save className="mr-0 h-4 w-4 sm:mr-2" />
       )}
-      <span className="hidden sm:inline">{children || (isLoading ? 'Saving...' : 'Save')}</span>
+      <span>{children || (isLoading ? 'Saving...' : 'Save')}</span>
     </Button>
   );
 }

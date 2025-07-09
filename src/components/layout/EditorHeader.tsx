@@ -10,7 +10,7 @@ import ProjectNameInput from './Header/ProjectNameInput';
 import MobileActions from './Header/MobileActions';
 import DesktopActions from './Header/DesktopActions';
 
-export default function Header() {
+const EditorHeader = () => {
   const router = useRouter();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,7 +20,6 @@ export default function Header() {
 
   const {
     projectName,
-    setProjectName,
     saveProject,
     exportSchema,
     toggleDiagramVisibility,
@@ -95,11 +94,7 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b bg-card/95 px-2 backdrop-blur-lg sm:px-4">
-        <ProjectNameInput
-          projectName={projectName}
-          setProjectName={setProjectName}
-          onHomeClick={() => router.push('/dashboard')}
-        />
+        <ProjectNameInput />
 
         <DesktopActions
           isLoading={isLoading}
@@ -146,4 +141,6 @@ export default function Header() {
       />
     </>
   );
-}
+};
+
+export default EditorHeader;

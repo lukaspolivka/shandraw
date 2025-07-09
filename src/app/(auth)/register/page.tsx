@@ -4,6 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Image from 'next/image';
 import config from '@/config';
 
+export const metadata = {
+  title: `Create Account - ${config.app_name}`,
+  description: `Join ${config.app_name} to start designing and managing database schemas with ease.`,
+};
+
 export default function RegisterPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
