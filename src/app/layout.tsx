@@ -1,10 +1,9 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import config from '@/config';
-import { cn } from '@/lib/utils';
-import { Inter, Source_Code_Pro } from 'next/font/google';
 import { ThemeProvider } from '@/components/provider/ThemeProvider';
+import { Inter, Source_Code_Pro,  } from 'next/font/google';
+import { siteMetadata } from '@/config/metadata';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,10 +17,13 @@ const sourceCodePro = Source_Code_Pro({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: config.app_name,
-  description: 'Code-driven database diagramming tool',
-};
+export const metadata: Metadata = siteMetadata;
+export const viewport: Viewport = {
+  themeColor: '#112A46',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export default function RootLayout({
   children,
@@ -29,11 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${sourceCodePro.variable}`}
+    >
       <head>
         <meta name="theme-color" content="#112A46" />
       </head>
-      <body className={cn('font-body antialiased', inter.variable, sourceCodePro.variable)}>
+      <body className="font-body antialiased">
         <ThemeProvider disableTransitionOnChange>
           {children}
           <Toaster />

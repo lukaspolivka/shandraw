@@ -17,7 +17,7 @@ export default function LoginPage() {
               height={48}
               className="mx-auto"
             />
-            <CardTitle>Welcome back</CardTitle>
+            <CardTitle className="text-2xl">Welcome back</CardTitle>
             <CardDescription>Enter your credentials to access your account</CardDescription>
           </CardHeader>
           <CardContent>

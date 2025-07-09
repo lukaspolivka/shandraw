@@ -4,12 +4,14 @@ const config: Config = {
   darkMode: 'class',
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{ts,tsx}',
+    './src/components/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
       fontFamily: {
         body: ['var(--font-inter)', 'ui-sans-serif', 'system-ui'],
-        code: ['var(--font-source-code-pro)', 'ui-monospace', 'SFMono-Regular'],
+        code: ['var(--font-source-code-pro)', 'ui-monospace', 'monospace'],
       },
       colors: {
         background: 'oklch(var(--background))',
