@@ -82,9 +82,9 @@ function Diagram({
         proOptions={{ hideAttribution: true }}
         minZoom={0.05}
         maxZoom={1.5}
-        nodesDraggable
+        nodesDraggable={false}
         nodesConnectable={false}
-        elementsSelectable
+        elementsSelectable={false}
         zoomOnScroll
         panOnDrag
       >

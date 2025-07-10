@@ -3,12 +3,21 @@
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/store/useAppStore';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserNav } from '../UserNav';
 
 const PublicAuthButton = () => {
   const { getToken } = useAppStore();
   const token = getToken();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div>
       {token ? (

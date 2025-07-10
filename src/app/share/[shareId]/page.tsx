@@ -73,7 +73,7 @@ export default function SharePage() {
 
   if (error) {
     return (
-      <div className="py-16 text-center">
+      <div className={clsx(containerClassName, 'flex flex-col items-center justify-center')}>
         <ServerCrash className="mx-auto h-12 w-12 text-destructive" />
         <h3 className="mt-4 text-lg font-semibold">Could not load diagram</h3>
         <p className="mt-1 text-sm text-muted-foreground">{error}</p>

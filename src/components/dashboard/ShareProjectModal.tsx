@@ -11,10 +11,11 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Loader2, Copy } from 'lucide-react';
+import { Loader2, Copy, Eye } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import { useAppStore } from '@/store/useAppStore';
 import config from '@/config';
+import Link from 'next/link';
 
 interface ShareProjectModalProps {
   project: any;
@@ -109,7 +110,11 @@ export function ShareProjectModal({ project, open, onOpenChange }: ShareProjectM
                 Anyone with the link can view and export.
               </span>
             </Label>
+            
             {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+            {(!isLoading &&shareLink && isPublic) && <Link href={shareLink} target='_blank'>
+            <Button variant="outline" size="icon"><Eye className="h-4 w-4"/></Button>
+            </Link>}
           </div>
 
           {isPublic && shareLink && (
