@@ -7,10 +7,18 @@ export interface SchemaSlice {
   setSchemaCode: (code: string) => void;
   updateDiagram: () => Promise<void>;
   appendSchemaCode: (code: string) => void;
+  navigateToTable: (tableName: string) => void;
+  navigateToColumn: (tableName: string, columnName: string) => void;
+  editorView: any | null;
+  setEditorView: (view: any) => void;
 }
 
 export const createSchemaSlice: StoreSlice<SchemaSlice> = (set, get) => ({
   schemaCode: DBML_HELP_TEXT,
+  editorView: null,
+  setEditorView: (view) => {
+    set({ editorView: view });
+  },
   setSchemaCode: (code) => {
     if (typeof code !== 'string') {
       console.warn('Invalid schemaCode detected:', code);
@@ -26,6 +34,59 @@ export const createSchemaSlice: StoreSlice<SchemaSlice> = (set, get) => ({
       (currentCode === DBML_HELP_TEXT || !currentCode.trim() ? '' : currentCode + '\n\n') +
       codeToAppend;
     get().setSchemaCode(newCode);
+  },
+  navigateToTable: (tableName) => {
+    const { schemaCode, editorView } = get();
+    if (!editorView) {
+      return;
+    }
+
+    const tableRegex = new RegExp(`Table\\s+${tableName}\\s*{`, 'i');
+    const match = tableRegex.exec(schemaCode);
+
+    if (match) {
+      const position = match.index;
+
+      const lineLength = schemaCode.substring(position).split('\n')[0].length;
+      const transaction = editorView.state.update({
+        selection: { anchor: position + lineLength },
+        scrollIntoView: true
+      });
+
+      editorView.dispatch(transaction);
+      editorView.focus();
+    }
+  },
+  navigateToColumn: (tableName, columnName) => {
+    console.log("navigating to column: '" + columnName + "' in table: '" + tableName + "'");
+    const { schemaCode, editorView } = get();
+    if (!editorView) {
+      return;
+    }
+
+    const tableRegex = new RegExp(`Table\\s+${tableName}\\s*{([\\s\\S]*?)}`, 'i');
+    const tableMatch = tableRegex.exec(schemaCode);
+
+    if (tableMatch) {
+      const tableContent = tableMatch[1];
+      const tableStartPosition = tableMatch.index;
+
+      const columnRegex = new RegExp(`\\s+${columnName}\\s+[\\w\\(\\)]+`, 'i');
+      const columnMatch = columnRegex.exec(tableContent);
+
+      if (columnMatch) {
+        const columnPosition = tableStartPosition + tableMatch[0].indexOf(columnMatch[0]) + 1;
+
+        const lineLength = schemaCode.substring(columnPosition).split('\n')[0].length;
+        const transaction = editorView.state.update({
+          selection: { anchor: columnPosition +  lineLength},
+          scrollIntoView: true
+        });
+
+        editorView.dispatch(transaction);
+        editorView.focus();
+      }
+    }
   },
   updateDiagram: async () => {
     try {

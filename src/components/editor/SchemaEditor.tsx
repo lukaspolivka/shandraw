@@ -15,7 +15,7 @@ import {
 import CodeMirror from '@uiw/react-codemirror';
 import { sql } from '@codemirror/lang-sql';
 import { autocompletion } from '@codemirror/autocomplete';
-import { keymap } from '@codemirror/view';
+import { keymap, EditorView } from '@codemirror/view';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { eclipseInit } from '@uiw/codemirror-theme-eclipse';
 import { useAppStore } from '@/store/useAppStore';
@@ -30,6 +30,7 @@ export default function SchemaEditor() {
     saveProject,
     updateDiagram,
     isLoading: isStoreLoading,
+    setEditorView,
   } = useAppStore();
 
   const eclipseTheme = eclipseInit({
@@ -140,6 +141,9 @@ export default function SchemaEditor() {
           onChange={onChange}
           theme={editorTheme}
           className="h-full font-code text-sm"
+          onCreateEditor={(view: EditorView) => {
+            setEditorView(view);
+          }}
         />
       </div>
       <div className="border-t p-2">
