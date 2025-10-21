@@ -17,7 +17,7 @@ import { sql } from '@codemirror/lang-sql';
 import { autocompletion } from '@codemirror/autocomplete';
 import { keymap } from '@codemirror/view';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
-import { eclipse } from '@uiw/codemirror-theme-eclipse';
+import { eclipseInit } from '@uiw/codemirror-theme-eclipse';
 import { useAppStore } from '@/store/useAppStore';
 import { HelpAccordion } from './HelpAccordion';
 import { dbmlAutocomplete } from './dbmlAutocomplete';
@@ -32,8 +32,14 @@ export default function SchemaEditor() {
     isLoading: isStoreLoading,
   } = useAppStore();
 
+  const eclipseTheme = eclipseInit({
+    settings: {
+      caret: "#000000",
+    },
+  });
+
   const [isClient, setIsClient] = useState(false);
-  const [editorTheme, setEditorTheme] = useState<any>(eclipse);
+  const [editorTheme, setEditorTheme] = useState<any>(eclipseTheme);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -48,7 +54,7 @@ export default function SchemaEditor() {
 
     const checkTheme = () => {
       const isDark = document.documentElement.classList.contains('dark');
-      setEditorTheme(isDark ? vscodeDark : eclipse);
+      setEditorTheme(isDark ? vscodeDark : eclipseTheme);
     };
 
     checkTheme();
