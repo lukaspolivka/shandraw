@@ -58,7 +58,6 @@ export const createSchemaSlice: StoreSlice<SchemaSlice> = (set, get) => ({
     }
   },
   navigateToColumn: (tableName, columnName) => {
-    console.log("navigating to column: '" + columnName + "' in table: '" + tableName + "'");
     const { schemaCode, editorView } = get();
     if (!editorView) {
       return;
