@@ -3,6 +3,7 @@
 import { Handle, Position, NodeProps } from 'reactflow';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { KeyRound, Link } from 'lucide-react';
+import { useAppStore } from '@/store/useAppStore';
 
 interface Column {
   id: string;
@@ -18,9 +19,17 @@ interface TableNodeData {
 }
 
 function CustomNode({ data }: NodeProps<TableNodeData>) {
+  const { navigateToTable, navigateToColumn } = useAppStore();
+
   return (
-    <Card className="w-64 rounded-lg border-2 p-0 border-primary/50 shadow-lg transition-all duration-200 hover:border-primary hover:shadow-2xl">
-      <CardHeader className="rounded-t-md bg-primary/10 p-3">
+    <Card 
+      className="w-64 rounded-lg border-2 p-0 border-primary/50 shadow-lg transition-all duration-200 hover:border-primary hover:shadow-2xl"
+      onDoubleClick={(e) => {
+        e.stopPropagation();
+        navigateToTable(data.name);
+      }}
+    >
+      <CardHeader className="rounded-t-md bg-primary/10 p-3 card-header">
         <CardTitle className="text-base font-bold text-primary">{data.name}</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
@@ -29,6 +38,10 @@ function CustomNode({ data }: NodeProps<TableNodeData>) {
             <li
               key={col.id}
               className="relative flex items-center justify-between p-2 text-sm transition-colors hover:bg-muted/50"
+              onDoubleClick={(e) => {
+                e.stopPropagation();
+                navigateToColumn(data.name, col.name);
+              }}
             >
               <div className="flex items-center gap-2">
                 {col.pk && <KeyRound className="h-3 w-3 text-yellow-500" />}
